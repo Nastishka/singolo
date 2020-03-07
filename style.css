@@ -231,7 +231,7 @@
 
 .screen.second-theme {
   background-image: url("./assets/images/bg-blue.jpg");
-  background-position: -118px -117px;
+  background-position: -118px -121px;
 }
 
 .services {
@@ -324,7 +324,6 @@
 
 .portfolio.wrapper {
   padding-left: 39.3px;
-  padding-right: 40.7px;
 }
 
 .portfolio h2 {
