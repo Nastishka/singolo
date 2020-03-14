@@ -9,6 +9,10 @@
   border: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .page-wrapper {
   width: 1020px;
   margin: auto;
@@ -328,6 +332,7 @@
 
 .portfolio.wrapper {
   padding-left: 39.3px;
+  padding-right: 40.7px;
 }
 
 .portfolio h2 {
