@@ -34,7 +34,20 @@ const scrollPage = (selectedLink) => {
 }
 
 const rearangePortfolioImages = (selectedLink) => {
-  console.log('Put rearanging portfolio items here');
+  if (!selectedLink.classList.contains('active')) {
+    let imageList = document.querySelectorAll('.portfolio-image');
+    imageList.forEach((image) => {
+      let currentClassNames = image.className.match(/image\d+/);
+      if (currentClassNames && currentClassNames.length == 1) {
+        let currentClassName = currentClassNames[0];
+        let imageId = parseInt(currentClassName.match(/\d+/)[0]);
+        let imageIdNew = imageId < 12 ? ++imageId : 1;
+        let newClassName = 'image' + imageIdNew;
+        image.classList.add(newClassName);
+        image.classList.remove(currentClassName);
+      }
+    });
+  }
 }
 
 const fixForScrolling = () => {

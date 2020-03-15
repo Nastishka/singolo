@@ -384,6 +384,10 @@ html {
   border-color: #c5c5c5;
 }
 
+.portfolio-action-links li a.active:hover {
+  cursor: default;
+}
+
 .portfolio-action-links li a.web-design {
   padding-right: 5px;
 }
