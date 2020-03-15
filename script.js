@@ -1,10 +1,13 @@
-const makeLinkActive = (parentContainer, link) => {
-  let currentActiveLink = document.querySelector(`${parentContainer} a.active`);
+const makeListItemActive = (parentContainer, target) => {
+  let currentActiveLink = document.querySelector(`${parentContainer} li.active`);
   if (currentActiveLink) {
     currentActiveLink.classList.remove('active');
   }
-  link.classList.add('active');
+  if (target) {
+    target.parentElement.classList.add('active');
+  }
 }
+
 const addEventListenersForLinks = (parentContainer, interactivityFunction) => {
   let navLinks = document.querySelectorAll(`${parentContainer} a`);
   navLinks.forEach(link => {
@@ -13,7 +16,7 @@ const addEventListenersForLinks = (parentContainer, interactivityFunction) => {
       if (interactivityFunction) {
         interactivityFunction(link);
       }
-      makeLinkActive(parentContainer, link);
+      makeListItemActive(parentContainer, link);
     });
   });
 }
@@ -34,7 +37,8 @@ const scrollPage = (selectedLink) => {
 }
 
 const rearangePortfolioImages = (selectedLink) => {
-  if (!selectedLink.classList.contains('active')) {
+  if (!selectedLink.parentElement.classList.contains('active')) {
+    makeListItemActive('.portfolio-images');
     let imageList = document.querySelectorAll('.portfolio-image');
     imageList.forEach((image) => {
       let currentClassNames = image.className.match(/image\d+/);
@@ -63,7 +67,7 @@ activateCurrentNavLink = (parentContainer) => {
   let currentActiveLink = document.querySelector(
     `${parentContainer} a[href='${currentHash}']`
   );
-  makeLinkActive(parentContainer, currentActiveLink)
+  makeListItemActive(parentContainer, currentActiveLink);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -71,4 +75,5 @@ document.addEventListener("DOMContentLoaded", () => {
   activateCurrentNavLink('.nav-container');
   addEventListenersForLinks('.nav-container', scrollPage);
   addEventListenersForLinks('.portfolio-action-links', rearangePortfolioImages);
+  addEventListenersForLinks('.portfolio-images');
 });
