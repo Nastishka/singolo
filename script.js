@@ -1,14 +1,17 @@
-const makeListItemActive = (parentContainer, target) => {
+const makeListItemActive = (parentContainer, target, deactivateOnSecondClick) => {
+  let isCurrentListItemActive = target ? target.parentElement.classList.contains('active') : false;
   let currentActiveLink = document.querySelector(`${parentContainer} li.active`);
   if (currentActiveLink) {
     currentActiveLink.classList.remove('active');
   }
   if (target) {
-    target.parentElement.classList.add('active');
+    if (!(isCurrentListItemActive && deactivateOnSecondClick)) {
+      target.parentElement.classList.add('active');
+    }
   }
 }
 
-const addEventListenersForLinks = (parentContainer, interactivityFunction) => {
+const addEventListenersForLinks = (parentContainer, interactivityFunction, deactivateOnSecondClick) => {
   let navLinks = document.querySelectorAll(`${parentContainer} a`);
   navLinks.forEach(link => {
     link.addEventListener('click', function (e) {
@@ -16,7 +19,7 @@ const addEventListenersForLinks = (parentContainer, interactivityFunction) => {
       if (interactivityFunction) {
         interactivityFunction(link);
       }
-      makeListItemActive(parentContainer, link);
+      makeListItemActive(parentContainer, link, deactivateOnSecondClick);
     });
   });
 }
@@ -75,5 +78,5 @@ document.addEventListener("DOMContentLoaded", () => {
   activateCurrentNavLink('.nav-container');
   addEventListenersForLinks('.nav-container', scrollPage);
   addEventListenersForLinks('.portfolio-action-links', rearangePortfolioImages);
-  addEventListenersForLinks('.portfolio-images');
+  addEventListenersForLinks('.portfolio-images', null, true);
 });
