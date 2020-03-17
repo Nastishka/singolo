@@ -96,9 +96,10 @@ const generateContentForModalWindow = (quotesForm) => {
   return dlElement;
 }
 
-const submitQuotesForm = (quotesForm) => {
+const onSubmitQuotesForm = (quotesForm) => {
   let content = generateContentForModalWindow(quotesForm);
   openModalWindow('The letter was sent', content);
+  quotesForm.reset();
 }
 
 const scrollPage = (selectedLink) => {
@@ -156,6 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenersForLinks('.nav-container', scrollPage);
   addEventListenersForLinks('.portfolio-action-links', rearangePortfolioImages);
   addEventListenersForLinks('.portfolio-images', null, true);
-  addEventListenerForFormSubmit('get-quote-form', submitQuotesForm);
+  addEventListenerForFormSubmit('get-quote-form', onSubmitQuotesForm);
   addEventListenerForModalWindow();
 });
