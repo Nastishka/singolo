@@ -221,12 +221,12 @@
         easy. Then, if you like our rates (and we're pretty sure you will), simply purchase your policy online and
         we'll provide you with immediate proof of insurance.
       </p>
-      <form class="flex-container" action="https://www.w3schools.com/action_page.php" autocomplete="off">
+      <form id="get-quote-form" class="flex-container" action="https://www.w3schools.com/action_page.php" autocomplete="off">
         <div class="data-fields">
-          <input name="fullName" type="text" placeholder="Name (Required)" required>
-          <input name="email" type="email" placeholder="Email (Required)" required>
-          <input name="subject" type="text" placeholder="Subject">
-          <textarea class="details" name="details" placeholder="Describe your project in detail..."></textarea>
+          <input name="fullName" type="text" placeholder="Name (Required)" maxlength="50" required>
+          <input name="email" type="email" placeholder="Email (Required)" maxlength="50" required>
+          <input name="subject" type="text" placeholder="Subject" maxlength="100">
+          <textarea class="details" name="details" placeholder="Describe your project in detail..." maxlength="1000"></textarea>
           <input type="submit">
         </div>
         <div class="contact-info">
@@ -267,6 +267,19 @@
       </li>
     </ul>
   </footer>
+  <dialog class="modal-window">
+    <div class="modal-window-container">
+      <header class="modal-window-header">
+        <div class="modal-window-close">&times;</div>
+        <h3></h3>
+      </header>
+      <main class="modal-window-content">
+      </main>
+      <footer class="modal-window-footer">
+        <button class="modal-window-close">OK</button>
+      </footer>
+    </div>
+  </dialog>
   <script src="script.js" type="text/javascript"></script>
 </body>
 

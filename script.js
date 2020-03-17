@@ -1,12 +1,19 @@
+const MODAL_WINDOW_SELECTOR = '.modal-window';
+const ACTIVE_LINK_CLASS_NAME = 'active';
+const VISIBLE_CLASS_NAME = 'visible';
+const HASH_SIGN = '#';
+
 const makeListItemActive = (parentContainer, target, deactivateOnSecondClick) => {
-  let isCurrentListItemActive = target ? target.parentElement.classList.contains('active') : false;
-  let currentActiveLink = document.querySelector(`${parentContainer} li.active`);
+  let isCurrentListItemActive = target ?
+    target.parentElement.classList.contains(ACTIVE_LINK_CLASS_NAME) : false;
+  let currentActiveLink = document.querySelector(
+    `${parentContainer} li.${ACTIVE_LINK_CLASS_NAME}`);
   if (currentActiveLink) {
-    currentActiveLink.classList.remove('active');
+    currentActiveLink.classList.remove(ACTIVE_LINK_CLASS_NAME);
   }
   if (target) {
     if (!(isCurrentListItemActive && deactivateOnSecondClick)) {
-      target.parentElement.classList.add('active');
+      target.parentElement.classList.add(ACTIVE_LINK_CLASS_NAME);
     }
   }
 }
@@ -24,6 +31,76 @@ const addEventListenersForLinks = (parentContainer, interactivityFunction, deact
   });
 }
 
+const addEventListenerForFormSubmit = (formId, submitAction) => {
+  let form = document.querySelector(`#${formId}`);
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    submitAction(e.target);
+  });
+}
+
+const addEventListenerForModalWindow = () => {
+  let modalWindow = document.querySelector(MODAL_WINDOW_SELECTOR);
+  let closeBtns = document.querySelectorAll(`${MODAL_WINDOW_SELECTOR}-close`);
+
+  closeBtns.forEach(closeBtn => {
+    closeBtn.addEventListener('click', function (e) {
+      modalWindow.classList.remove(VISIBLE_CLASS_NAME);
+    });
+  });
+
+  window.addEventListener('click', function (e) {
+    if (e.target === modalWindow) {
+      modalWindow.classList.remove(VISIBLE_CLASS_NAME);
+    }
+  });
+}
+
+const openModalWindow = (header, content) => {
+  let modalWindow = document.querySelector(MODAL_WINDOW_SELECTOR);
+  let modalWindowHeader = document.querySelector(`${MODAL_WINDOW_SELECTOR}-header h3`);
+  let modalWindowContent = document.querySelector(`${MODAL_WINDOW_SELECTOR}-content`);
+  modalWindowHeader.innerHTML = header;
+  modalWindowContent.innerHTML = '';
+  modalWindowContent.appendChild(content);
+  modalWindow.classList.add(VISIBLE_CLASS_NAME);
+}
+
+const generateContentForModalWindow = (quotesForm) => {
+  let subject = quotesForm['subject'].value.trim();
+  let subjectHeader = subject ? 'Subject:' : 'Without subject';
+  let details = quotesForm['details'].value.trim();
+  let detailsHeader = details ? 'Description:' : 'Without description';
+
+  let appendDLitem = (dlElement, dt, dd, classNameForDD) => {
+    let dtElement = document.createElement('dt');
+    dlElement.appendChild(dtElement);
+    if (dd) {
+      dtElement.innerText = `${dt}`;
+      let ddElement = document.createElement('dd');
+      let preElement = document.createElement('pre');
+      preElement.innerText = dd;
+      ddElement.append(preElement);
+      if (classNameForDD) {
+        ddElement.setAttribute('class', classNameForDD);
+      }
+      dlElement.appendChild(ddElement);
+    } else{
+      dtElement.innerText = `${dt}`;
+    }
+  };
+
+  let dlElement = document.createElement('dl');
+  appendDLitem(dlElement, subjectHeader, subject);
+  appendDLitem(dlElement, detailsHeader, details, 'description');
+  return dlElement;
+}
+
+const submitQuotesForm = (quotesForm) => {
+  let content = generateContentForModalWindow(quotesForm);
+  openModalWindow('The letter was sent', content);
+}
+
 const scrollPage = (selectedLink) => {
   let sectionId = selectedLink.hash;
   if (sectionId && sectionId.length > 1) {
@@ -35,12 +112,12 @@ const scrollPage = (selectedLink) => {
       return;
     }
   }
-  window.location.hash = '#';
+  window.location.hash = HASH_SIGN;
   window.scroll(0, 0);
 }
 
 const rearangePortfolioImages = (selectedLink) => {
-  if (!selectedLink.parentElement.classList.contains('active')) {
+  if (!selectedLink.parentElement.classList.contains(ACTIVE_LINK_CLASS_NAME)) {
     makeListItemActive('.portfolio-images');
     let imageList = document.querySelectorAll('.portfolio-image');
     imageList.forEach((image) => {
@@ -58,15 +135,15 @@ const rearangePortfolioImages = (selectedLink) => {
 }
 
 const fixForScrolling = () => {
-  // scroll to the top of the section if hash tag exist
+  // scroll to the top of the section if hash tag exists
   if (window.location.hash && window.location.hash.length > 1) {
     let linkStub = { hash: window.location.hash };
     scrollPage(linkStub);
   }
 }
 
-activateCurrentNavLink = (parentContainer) => {
-  let currentHash = window.location.hash || '#';
+const activateCurrentNavLink = (parentContainer) => {
+  let currentHash = window.location.hash || HASH_SIGN;
   let currentActiveLink = document.querySelector(
     `${parentContainer} a[href='${currentHash}']`
   );
@@ -79,4 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenersForLinks('.nav-container', scrollPage);
   addEventListenersForLinks('.portfolio-action-links', rearangePortfolioImages);
   addEventListenersForLinks('.portfolio-images', null, true);
+  addEventListenerForFormSubmit('get-quote-form', submitQuotesForm);
+  addEventListenerForModalWindow();
 });
