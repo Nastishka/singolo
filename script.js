@@ -120,8 +120,10 @@ const scrollPage = (selectedLink) => {
 const rearangePortfolioImages = (selectedLink) => {
   if (!selectedLink.parentElement.classList.contains(ACTIVE_LINK_CLASS_NAME)) {
     makeListItemActive('.portfolio-images');
-    let imageList = document.querySelectorAll('.portfolio-image');
-    imageList.forEach((image) => {
+    let imagesContainer = document.querySelector('.portfolio-images');
+    let removedChild = imagesContainer.removeChild(imagesContainer.firstElementChild);
+    imagesContainer.appendChild(removedChild);
+    /*imageList.forEach((image) => {
       let currentClassNames = image.className.match(/image\d+/);
       if (currentClassNames && currentClassNames.length == 1) {
         let currentClassName = currentClassNames[0];
@@ -131,7 +133,7 @@ const rearangePortfolioImages = (selectedLink) => {
         image.classList.add(newClassName);
         image.classList.remove(currentClassName);
       }
-    });
+    });*/
   }
 }
 
