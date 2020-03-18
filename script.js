@@ -18,6 +18,34 @@ const makeListItemActive = (parentContainer, target, deactivateOnSecondClick) =>
   }
 }
 
+const addEventListenerOnWindowScroll = (navLinksSelector) => {
+  let headerHeight = document.querySelector('header.header').clientHeight;
+  let sectionStubs = [];
+  let sections = document.querySelectorAll('main > section[id]');
+  sectionStubs.push({
+    startPosition: 0,
+    endPosition: document.querySelector('aside.slider').clientHeight / 3,
+    relatedLink: document.querySelector(`${navLinksSelector} li a[href='#']`)
+  });
+  sections.forEach((section) => {
+    let sectionId = section['id'];
+    sectionStubs.push({
+      startPosition: section.offsetTop - headerHeight,
+      endPosition: section.offsetTop + section.clientHeight / 3,
+      relatedLink: document.querySelector(`${navLinksSelector} li a[href='#${sectionId}']`)
+    });
+  });
+  window.addEventListener('scroll', function (e) {
+    console.log(e.target);
+    let currentPosition = window.scrollY;
+    sectionStubs.forEach((item) => {
+      if (item.startPosition <= currentPosition && item.endPosition > currentPosition) {
+        makeListItemActive(navLinksSelector, item.relatedLink);
+      }
+    });
+  });
+}
+
 const addEventListenersForLinks = (parentContainer, interactivityFunction, deactivateOnSecondClick) => {
   let navLinks = document.querySelectorAll(`${parentContainer} a`);
   navLinks.forEach(link => {
@@ -31,7 +59,7 @@ const addEventListenersForLinks = (parentContainer, interactivityFunction, deact
   });
 }
 
-const addEventListenerForFormSubmit = (formId, submitAction) => {
+const addEventListenerOnFormSubmit = (formId, submitAction) => {
   let form = document.querySelector(`#${formId}`);
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -85,7 +113,7 @@ const generateContentForModalWindow = (quotesForm) => {
         ddElement.setAttribute('class', classNameForDD);
       }
       dlElement.appendChild(ddElement);
-    } else{
+    } else {
       dtElement.innerText = `${dt}`;
     }
   };
@@ -123,17 +151,6 @@ const rearangePortfolioImages = (selectedLink) => {
     let imagesContainer = document.querySelector('.portfolio-images');
     let removedChild = imagesContainer.removeChild(imagesContainer.firstElementChild);
     imagesContainer.appendChild(removedChild);
-    /*imageList.forEach((image) => {
-      let currentClassNames = image.className.match(/image\d+/);
-      if (currentClassNames && currentClassNames.length == 1) {
-        let currentClassName = currentClassNames[0];
-        let imageId = parseInt(currentClassName.match(/\d+/)[0]);
-        let imageIdNew = imageId < 12 ? ++imageId : 1;
-        let newClassName = 'image' + imageIdNew;
-        image.classList.add(newClassName);
-        image.classList.remove(currentClassName);
-      }
-    });*/
   }
 }
 
@@ -159,6 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenersForLinks('.nav-container', scrollPage);
   addEventListenersForLinks('.portfolio-action-links', rearangePortfolioImages);
   addEventListenersForLinks('.portfolio-images', null, true);
-  addEventListenerForFormSubmit('get-quote-form', onSubmitQuotesForm);
+  addEventListenerOnFormSubmit('get-quote-form', onSubmitQuotesForm);
   addEventListenerForModalWindow();
+  addEventListenerOnWindowScroll('.nav-container');
 });
