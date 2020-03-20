@@ -102,9 +102,9 @@ const addEventListenerForSliderActionLinks = (sliderActionLinksSelector) => {
 }
 
 const addEventListenerForPhones = (phonesSelector) => {
-  let phones = document.querySelectorAll(phonesSelector);
-  phones.forEach((phone) => {
-    phone.addEventListener('click', function (e) {
+  let phonesAndScreens = document.querySelectorAll(`${phonesSelector}>.base, ${phonesSelector}>.screen`);
+  phonesAndScreens.forEach((phoneOrScreen) => {
+    phoneOrScreen.addEventListener('click', function (e) {
       let screen = this.parentNode.querySelector('.screen');
       screen.classList.toggle('off');
     });
@@ -196,6 +196,13 @@ const activateCurrentNavLink = (parentContainer) => {
   makeListItemActive(parentContainer, currentActiveLink);
 }
 
+const switchOnPhonesScreen = (slide) => {
+  let screens = slide.querySelectorAll('.screen');
+  screens.forEach(screen => {
+    screen.classList.remove('off');
+  })
+}
+
 const showSliderNavLinks = (currentSlideClassName, sliderActionLinksSelector) => {
   let actionLinks = document.querySelectorAll(sliderActionLinksSelector);
   actionLinks.forEach((actionLink) => {
@@ -233,6 +240,7 @@ const showNewSlide = (slideOffset, directionForHiding, directionForShowing, slid
   let newSlideNumber = (currentSlideNumber - 1 + slideOffset + slides.length) % slides.length;
   let newSlide = document.querySelector(`.sliders > .slider.slider-${newSlideNumber + 1}`);
   if (newSlide) {
+    switchOnPhonesScreen(newSlide);
     newSlide.classList.add('next', directionForShowing);
     let showSlide = function (e) {
       this.classList.remove('next', directionForShowing);
@@ -254,5 +262,5 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenerForModalWindow('#get-quote-form');
   addEventListenerForSliderActionLinks('.slider-action');
   addEventListenerOnWindowScroll('.nav-container');
-  addEventListenerForPhones('.iphone .base');
+  addEventListenerForPhones('.iphone');
 });
