@@ -18,6 +18,8 @@ const makeListItemActive = (parentContainer, target, deactivateOnSecondClick) =>
   }
 }
 
+let allowActivatingNavItemsOnScroll = true;
+
 const addEventListenerOnWindowScroll = (navLinksSelector) => {
   let headerHeight = document.querySelector('header.header').clientHeight;
   let sectionStubs = [];
@@ -36,12 +38,14 @@ const addEventListenerOnWindowScroll = (navLinksSelector) => {
     });
   });
   window.addEventListener('scroll', function (e) {
-    let currentPosition = window.scrollY;
-    sectionStubs.forEach((item) => {
-      if (item.startPosition <= currentPosition && item.endPosition > currentPosition) {
-        makeListItemActive(navLinksSelector, item.relatedLink);
-      }
-    });
+    if (allowActivatingNavItemsOnScroll) {
+      let currentPosition = window.scrollY;
+      sectionStubs.forEach((item) => {
+        if (item.startPosition <= currentPosition && item.endPosition > currentPosition) {
+          makeListItemActive(navLinksSelector, item.relatedLink);
+        }
+      });
+    }
   });
 }
 
@@ -156,6 +160,15 @@ const onSubmitQuotesForm = (quotesForm) => {
   openModalWindow('The letter was sent', content);
 }
 
+const scrollWindow = (xPos, yPos) => {
+  allowActivatingNavItemsOnScroll = false;
+  window.scroll(xPos, yPos);
+  setTimeout(() => {
+    allowActivatingNavItemsOnScroll = true;
+  }, 1000);
+
+}
+
 const scrollPage = (selectedLink) => {
   let sectionId = selectedLink.hash;
   if (sectionId && sectionId.length > 1) {
@@ -163,12 +176,12 @@ const scrollPage = (selectedLink) => {
     if (section) {
       let headerHeight = document.querySelector('header.header').clientHeight;
       window.location.hash = sectionId;
-      window.scroll(0, section.offsetTop - headerHeight);
+      scrollWindow(0, section.offsetTop - headerHeight);
       return;
     }
   }
   window.location.hash = HASH_SIGN;
-  window.scroll(0, 0);
+  scrollWindow(0, 0);
 }
 
 const rearangePortfolioImages = (selectedLink) => {
