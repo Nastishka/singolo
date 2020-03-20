@@ -98,6 +98,16 @@ const addEventListenerOnSliderActionLinks = (sliderActionLinksSelector) => {
   });
 }
 
+const addEventListenerForPhones = (phonesSelector) => {
+  let phones = document.querySelectorAll(phonesSelector);
+  phones.forEach((phone) => {
+    phone.addEventListener('click', function (e) {
+      let screen = this.parentNode.querySelector('.screen');
+      screen.classList.toggle('off');
+    });
+  });
+}
+
 const openModalWindow = (header, content) => {
   let modalWindow = document.querySelector(MODAL_WINDOW_SELECTOR);
   let modalWindowHeader = document.querySelector(`${MODAL_WINDOW_SELECTOR}-header h3`);
@@ -222,4 +232,5 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenerOnSliderActionLinks('.slider-action');
   addEventListenerForModalWindow();
   addEventListenerOnWindowScroll('.nav-container');
+  addEventListenerForPhones('.iphone .base');
 });

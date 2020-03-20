@@ -281,6 +281,10 @@ html {
   background-repeat: no-repeat;
 }
 
+.slider .base {
+  cursor: pointer;
+}
+
 .iphone.vertical {
   top: 53px;
   left: 94px;
@@ -325,6 +329,10 @@ html {
 
   background-image: none;
   background-repeat: no-repeat;
+}
+
+.screen.off {
+  display: none;
 }
 
 .screen.first-theme {
