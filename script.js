@@ -67,19 +67,23 @@ const addEventListenerOnFormSubmit = (formId, submitAction) => {
   });
 }
 
-const addEventListenerForModalWindow = () => {
+const addEventListenerForModalWindow = (quotesFormSelector) => {
   let modalWindow = document.querySelector(MODAL_WINDOW_SELECTOR);
   let closeBtns = document.querySelectorAll(`${MODAL_WINDOW_SELECTOR}-close`);
+  let quotesForm = document.querySelector(quotesFormSelector);
+
+  let onModalWindowClose = () => {
+    modalWindow.classList.remove(VISIBLE_CLASS_NAME);
+    quotesForm.reset();
+  }
 
   closeBtns.forEach(closeBtn => {
-    closeBtn.addEventListener('click', function (e) {
-      modalWindow.classList.remove(VISIBLE_CLASS_NAME);
-    });
+    closeBtn.addEventListener('click', onModalWindowClose);
   });
 
   window.addEventListener('click', function (e) {
     if (e.target === modalWindow) {
-      modalWindow.classList.remove(VISIBLE_CLASS_NAME);
+      onModalWindowClose();
     }
   });
 }
@@ -151,7 +155,6 @@ const generateContentForModalWindow = (quotesForm) => {
 const onSubmitQuotesForm = (quotesForm) => {
   let content = generateContentForModalWindow(quotesForm);
   openModalWindow('The letter was sent', content);
-  quotesForm.reset();
 }
 
 const scrollPage = (selectedLink) => {
@@ -229,8 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenersForLinks('.portfolio-action-links', rearangePortfolioImages);
   addEventListenersForLinks('.portfolio-images', null, true);
   addEventListenerOnFormSubmit('get-quote-form', onSubmitQuotesForm);
+  addEventListenerForModalWindow('#get-quote-form');
   addEventListenerOnSliderActionLinks('.slider-action');
-  addEventListenerForModalWindow();
   addEventListenerOnWindowScroll('.nav-container');
   addEventListenerForPhones('.iphone .base');
 });
