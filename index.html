@@ -28,25 +28,34 @@
       </ul>
     </nav>
   </header>
-  <aside class="slider wrapper flex-container">
-    <div class="slider-left">
-      <a class="slider-action" href="#" target="_self"></a>
-    </div>
-    <div class="slider-center">
-      <div class="iphone vertical">
-        <div class="shadow"></div>
-        <div class="base"></div>
-        <div class="screen first-theme"></div>
+  <aside class="carousel flex-container">
+    <div class="sliders">
+      <div class="slider slider-1 active wrapper">
+        <div class="iphone vertical">
+          <div class="shadow"></div>
+          <div class="base"></div>
+          <div class="screen first-theme"></div>
+        </div>
+        <div class="iphone horizontal">
+          <div class="shadow"></div>
+          <div class="base"></div>
+          <div class="screen second-theme">
+          </div>
+        </div>
       </div>
-      <div class="iphone horizontal">
-        <div class="shadow"></div>
-        <div class="base"></div>
-        <div class="screen second-theme">
+      <div class="slider slider-2 wrapper">
+        <div class="iphone vertical-big">
+          <div class="shadow"></div>
+          <div class="base"></div>
+          <div class="screen third-theme"></div>
         </div>
       </div>
     </div>
-    <div class="slider-right">
-      <a class="slider-action" href="#" target="_self"></a>
+    <div>
+      <a class="slider-action left" href="#" target="_self"></a>
+    </div>
+    <div>
+      <a class="slider-action right" href="#" target="_self"></a>
     </div>
   </aside>
   <main class="main">
@@ -221,12 +230,14 @@
         easy. Then, if you like our rates (and we're pretty sure you will), simply purchase your policy online and
         we'll provide you with immediate proof of insurance.
       </p>
-      <form id="get-quote-form" class="flex-container" action="https://www.w3schools.com/action_page.php" autocomplete="off">
+      <form id="get-quote-form" class="flex-container" action="https://www.w3schools.com/action_page.php"
+        autocomplete="off">
         <div class="data-fields">
           <input name="fullName" type="text" placeholder="Name (Required)" maxlength="50" required>
           <input name="email" type="email" placeholder="Email (Required)" maxlength="50" required>
           <input name="subject" type="text" placeholder="Subject" maxlength="100">
-          <textarea class="details" name="details" placeholder="Describe your project in detail..." maxlength="1000"></textarea>
+          <textarea class="details" name="details" placeholder="Describe your project in detail..."
+            maxlength="1000"></textarea>
           <input type="submit">
         </div>
         <div class="contact-info">

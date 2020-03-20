@@ -1,19 +1,19 @@
 const MODAL_WINDOW_SELECTOR = '.modal-window';
-const ACTIVE_LINK_CLASS_NAME = 'active';
+const ACTIVE_ITEM_CLASS_NAME = 'active';
 const VISIBLE_CLASS_NAME = 'visible';
 const HASH_SIGN = '#';
 
 const makeListItemActive = (parentContainer, target, deactivateOnSecondClick) => {
   let isCurrentListItemActive = target ?
-    target.parentElement.classList.contains(ACTIVE_LINK_CLASS_NAME) : false;
+    target.parentElement.classList.contains(ACTIVE_ITEM_CLASS_NAME) : false;
   let currentActiveLink = document.querySelector(
-    `${parentContainer} li.${ACTIVE_LINK_CLASS_NAME}`);
+    `${parentContainer} li.${ACTIVE_ITEM_CLASS_NAME}`);
   if (currentActiveLink) {
-    currentActiveLink.classList.remove(ACTIVE_LINK_CLASS_NAME);
+    currentActiveLink.classList.remove(ACTIVE_ITEM_CLASS_NAME);
   }
   if (target) {
     if (!(isCurrentListItemActive && deactivateOnSecondClick)) {
-      target.parentElement.classList.add(ACTIVE_LINK_CLASS_NAME);
+      target.parentElement.classList.add(ACTIVE_ITEM_CLASS_NAME);
     }
   }
 }
@@ -24,7 +24,7 @@ const addEventListenerOnWindowScroll = (navLinksSelector) => {
   let sections = document.querySelectorAll('main > section[id]');
   sectionStubs.push({
     startPosition: 0,
-    endPosition: document.querySelector('aside.slider').clientHeight / 3,
+    endPosition: document.querySelector('aside.carousel').clientHeight / 3,
     relatedLink: document.querySelector(`${navLinksSelector} li a[href='#']`)
   });
   sections.forEach((section) => {
@@ -81,6 +81,20 @@ const addEventListenerForModalWindow = () => {
     if (e.target === modalWindow) {
       modalWindow.classList.remove(VISIBLE_CLASS_NAME);
     }
+  });
+}
+
+const addEventListenerOnSliderActionLinks = (sliderActionLinksSelector) => {
+  let actionLinks = document.querySelectorAll(sliderActionLinksSelector);
+  actionLinks.forEach((actionLink) => {
+    actionLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (actionLink.classList.contains('left')) {
+        showNewSlide(1, 'to-right', 'from-right');
+      } else {
+        showNewSlide(-1, 'to-left', 'from-left');
+      }
+    });
   });
 }
 
@@ -146,7 +160,7 @@ const scrollPage = (selectedLink) => {
 }
 
 const rearangePortfolioImages = (selectedLink) => {
-  if (!selectedLink.parentElement.classList.contains(ACTIVE_LINK_CLASS_NAME)) {
+  if (!selectedLink.parentElement.classList.contains(ACTIVE_ITEM_CLASS_NAME)) {
     makeListItemActive('.portfolio-images');
     let imagesContainer = document.querySelector('.portfolio-images');
     let removedChild = imagesContainer.removeChild(imagesContainer.firstElementChild);
@@ -170,6 +184,34 @@ const activateCurrentNavLink = (parentContainer) => {
   makeListItemActive(parentContainer, currentActiveLink);
 }
 
+const showNewSlide = (slideOffset, directionForHiding, directionForShowing) => {
+  let slides = document.querySelectorAll(".sliders > .slider");
+
+  let isAnimationStarded = true;
+  let currentSlideNumber = 0;
+  let currentSlide = document.querySelector(`.sliders > .slider.${ACTIVE_ITEM_CLASS_NAME}`);
+  if (currentSlide) {
+    currentSlideNumber = parseInt(/\d+/.exec(/slider-\d+/.exec(currentSlide.className)[0])[0]);
+    console.log(currentSlideNumber + 1);
+    currentSlide.classList.add(directionForHiding);
+    currentSlide.addEventListener('animationend', function (e) {
+      this.classList.remove(ACTIVE_ITEM_CLASS_NAME, directionForHiding);
+    });
+  }
+
+  let newSlideNumber = (currentSlideNumber - 1 + slideOffset + slides.length) % slides.length;
+  console.log(newSlideNumber + 1);
+  let newSlide = document.querySelector(`.sliders > .slider.slider-${newSlideNumber + 1}`);
+  if (newSlide) {
+    newSlide.classList.add('next', directionForShowing);
+    newSlide.addEventListener('animationend', function (e) {
+      this.classList.remove('next', directionForShowing);
+      this.classList.add(ACTIVE_ITEM_CLASS_NAME);
+      isAnimationStarded = false;
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   fixForScrolling();
   activateCurrentNavLink('.nav-container');
@@ -177,6 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenersForLinks('.portfolio-action-links', rearangePortfolioImages);
   addEventListenersForLinks('.portfolio-images', null, true);
   addEventListenerOnFormSubmit('get-quote-form', onSubmitQuotesForm);
+  addEventListenerOnSliderActionLinks('.slider-action');
   addEventListenerForModalWindow();
   addEventListenerOnWindowScroll('.nav-container');
 });
