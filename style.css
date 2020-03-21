@@ -443,7 +443,7 @@ html {
 }
 
 .portfolio.wrapper {
-  padding-right: 40.7px;
+  padding-right: 41px;
   padding-left: 39.3px;
 }
 
@@ -716,10 +716,22 @@ html {
   resize: none;
 }
 
+.get-quote .data-fields > [type="submit"] {
+  width: 136px;
+  height: 38px;
+
+  font-size: 14px;
+  font-family: "latoblack", "Arial", sans-serif;
+  color: #886a30;
+  text-transform: uppercase;
+
+  background: #fbc65f;
+  border-radius: 5px;
+}
+
 .get-quote .data-fields > [type="submit"]:hover,
 [type="submit"]:focus {
-  color: #f0d8d9;
-
+  box-shadow: 0 12px 16px 0 #00000088, 0 17px 50px 0 #00000030;
   cursor: pointer;
 }
 
