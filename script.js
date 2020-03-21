@@ -36,7 +36,6 @@ const addEventListenerOnWindowScroll = (navLinksSelector) => {
     });
   });
   window.addEventListener('scroll', function (e) {
-    console.log(e.target);
     let currentPosition = window.scrollY;
     sectionStubs.forEach((item) => {
       if (item.startPosition <= currentPosition && item.endPosition > currentPosition) {
@@ -88,15 +87,15 @@ const addEventListenerForModalWindow = (quotesFormSelector) => {
   });
 }
 
-const addEventListenerOnSliderActionLinks = (sliderActionLinksSelector) => {
+const addEventListenerForSliderActionLinks = (sliderActionLinksSelector) => {
   let actionLinks = document.querySelectorAll(sliderActionLinksSelector);
   actionLinks.forEach((actionLink) => {
     actionLink.addEventListener('click', function (e) {
       e.preventDefault();
       if (actionLink.classList.contains('left')) {
-        showNewSlide(1, 'to-right', 'from-right');
+        showNewSlide(1, 'to-right', 'from-right', sliderActionLinksSelector);
       } else {
-        showNewSlide(-1, 'to-left', 'from-left');
+        showNewSlide(-1, 'to-left', 'from-left', sliderActionLinksSelector);
       }
     });
   });
@@ -197,31 +196,51 @@ const activateCurrentNavLink = (parentContainer) => {
   makeListItemActive(parentContainer, currentActiveLink);
 }
 
-const showNewSlide = (slideOffset, directionForHiding, directionForShowing) => {
-  let slides = document.querySelectorAll(".sliders > .slider");
+const showSliderNavLinks = (currentSlideClassName, sliderActionLinksSelector) => {
+  let actionLinks = document.querySelectorAll(sliderActionLinksSelector);
+  actionLinks.forEach((actionLink) => {
+    if (currentSlideClassName.includes('slider-2')) {
+      actionLink.classList.add('blue');
+    } else {
+      actionLink.classList.remove('blue');
+    }
+    actionLink.classList.remove('hidden');
+  });
+};
 
-  let isAnimationStarded = true;
+const hideSliderNavLinks = (sliderActionLinksSelector) => {
+  let actionLinks = document.querySelectorAll(sliderActionLinksSelector);
+  actionLinks.forEach((actionLink) => {
+    actionLink.classList.add('hidden');
+  });
+};
+
+
+const showNewSlide = (slideOffset, directionForHiding, directionForShowing, sliderActionLinksSelector) => {
+  let slides = document.querySelectorAll(".sliders > .slider");
   let currentSlideNumber = 0;
   let currentSlide = document.querySelector(`.sliders > .slider.${ACTIVE_ITEM_CLASS_NAME}`);
   if (currentSlide) {
     currentSlideNumber = parseInt(/\d+/.exec(/slider-\d+/.exec(currentSlide.className)[0])[0]);
-    console.log(currentSlideNumber + 1);
     currentSlide.classList.add(directionForHiding);
-    currentSlide.addEventListener('animationend', function (e) {
+    let hideSlide = function (e) {
       this.classList.remove(ACTIVE_ITEM_CLASS_NAME, directionForHiding);
-    });
+      currentSlide.removeEventListener('animationend', hideSlide);
+    }
+    currentSlide.addEventListener('animationend', hideSlide);
   }
 
   let newSlideNumber = (currentSlideNumber - 1 + slideOffset + slides.length) % slides.length;
-  console.log(newSlideNumber + 1);
   let newSlide = document.querySelector(`.sliders > .slider.slider-${newSlideNumber + 1}`);
   if (newSlide) {
     newSlide.classList.add('next', directionForShowing);
-    newSlide.addEventListener('animationend', function (e) {
+    let showSlide = function (e) {
       this.classList.remove('next', directionForShowing);
       this.classList.add(ACTIVE_ITEM_CLASS_NAME);
-      isAnimationStarded = false;
-    });
+      showSliderNavLinks(newSlide.className, sliderActionLinksSelector);
+      newSlide.removeEventListener('animationend', showSlide);
+    }
+    newSlide.addEventListener('animationend', showSlide);
   }
 }
 
@@ -233,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenersForLinks('.portfolio-images', null, true);
   addEventListenerOnFormSubmit('get-quote-form', onSubmitQuotesForm);
   addEventListenerForModalWindow('#get-quote-form');
-  addEventListenerOnSliderActionLinks('.slider-action');
+  addEventListenerForSliderActionLinks('.slider-action');
   addEventListenerOnWindowScroll('.nav-container');
   addEventListenerForPhones('.iphone .base');
 });

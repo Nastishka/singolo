@@ -161,6 +161,10 @@ html {
   background-position: 2px;
 }
 
+.slider-action.blue {
+  background-image: url("./assets/images/arrow-blue.svg");
+}
+
 .slider-action:hover {
   background-image: url("./assets/images/chev.svg");
 }
