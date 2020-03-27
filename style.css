@@ -14,8 +14,8 @@ html {
 }
 
 .page-wrapper {
-  width: 1020px;
-  margin: auto;
+  max-width: 1020px;
+  /*margin: auto;*/
   overflow: scroll;
 }
 
@@ -73,7 +73,7 @@ html {
 
 /*************** Singolo. Part 1 ***************/
 .header {
-  position: sticky;
+  /*position: sticky;*/
   top: 0;
   z-index: 1;
 
@@ -84,6 +84,10 @@ html {
 
   background-color: #2d303a;
   border-bottom: #323746 solid 6px;
+}
+
+.header .burger-menu {
+  display: none;
 }
 
 .header .logo {
@@ -166,13 +170,13 @@ html {
 }
 
 .slider-action.left {
-  left: 40px;
   top: 281px;
+  left: 40px;
 }
 
 .slider-action.right {
-  right: 40px;
   top: 281px;
+  right: 40px;
 
   background-position: 0;
   transform: rotate(180deg);
@@ -208,6 +212,7 @@ html {
   background-color: #648bf0;
   background-image: url("assets/images/slide-2.png");
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .slider.active {
@@ -269,6 +274,7 @@ html {
 
   background-image: url("./assets/images/Shadow.png");
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .base {
@@ -281,6 +287,7 @@ html {
 
   background-image: url("./assets/images/iphone.png");
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .slider .base {
@@ -293,8 +300,34 @@ html {
 }
 
 .iphone.vertical-big {
-  top: 53px;
-  left: 394px;
+  top: 43px;
+  left: 383px;
+}
+
+.iphone.vertical-big .shadow {
+  /*width: 240px;
+  height: 483px;*/
+  width: 255px;
+  height: 513px;
+}
+
+.iphone.vertical-big .base {
+  /*width: 215px;
+  height: 458px;*/
+  width: 229.42px;
+  height: 486.45px;
+}
+
+.iphone.vertical-big .screen {
+  /*top: 89px;
+  left: 13px;
+  width: 189.5px;
+  height: 334.5px;*/
+  top: 69px;
+  left: 14px;
+
+  width: 200px;
+  height: 355px;
 }
 
 .iphone.horizontal {
@@ -517,8 +550,7 @@ html {
   flex-wrap: wrap;
   align-content: space-between;
   width: 100%;
-  height: 601px;
-  margin-top: 19px;
+  margin-top: 28px;
   padding-left: 1.1px;
 
   list-style-type: none;
@@ -532,10 +564,25 @@ html {
   display: inline-block;
   width: 220px;
   height: 187px;
+  /*width: 100%;
+  height: 100%;*/
   margin-bottom: 20px;
 
   background-color: #464b5e;
+  background-size: contain;
 }
+
+/*.portfolio-images li {
+  margin: 10px;
+  flex: 1 0 20%;
+}
+
+.portfolio-images li::before {
+  content: "";
+  float: left;
+  padding-top: 100%;
+
+}*/
 
 .portfolio-images li.active a {
   outline: solid 5px #f06c64;
@@ -612,7 +659,7 @@ html {
 }
 
 .about-us .details-item {
-  width: 300px;
+  width: calc(100% / 3 - 10px);
 }
 
 .about-us .description-container {
@@ -621,7 +668,7 @@ html {
 }
 
 .about-us .description-container h3 {
-  width: 300px;
+  width: 100%;
   margin-bottom: 10px;
 
   color: #666d89;
@@ -635,10 +682,17 @@ html {
 }
 
 .photo {
-  width: 300px;
-  height: 300px;
+  width: 100%;
 
   background-color: #464b5e;
+  background-size: contain;
+}
+
+.photo::before {
+  content: "";
+
+  display: block;
+  padding-top: 100%; /* initial ratio of 1:1*/
 }
 
 .photo.adam-jensen {
@@ -995,3 +1049,245 @@ div.modal-window-close:focus {
   cursor: pointer;
   opacity: 1;
 }
+
+@media screen and (min-width: 768px) and (max-width: 1019px) {
+  .page-wrapper {
+    max-width: 768px;
+  }
+
+  .header {
+    border-bottom-color: red;
+  }
+
+  .header .nav-container {
+    width: 375px;
+    padding-top: 15px;
+  }
+
+  .carousel {
+    height: 450px;
+  }
+
+  .slider-action.left {
+    top: 211px;
+    left: 29px;
+  }
+
+  .slider-action.right {
+    top: 211px;
+    right: 26px;
+  }
+
+  .iphone.vertical {
+    top: 41px;
+    left: 84px;
+  }
+
+  .iphone.horizontal {
+    top: 42.5px;
+    left: 411px;
+  }
+
+  .iphone.vertical-big {
+    top: 36px;
+    left: 290px;
+  }
+
+  .iphone.vertical-big .shadow {
+    width: 190.85px;
+    height: 379.74px;
+  }
+
+  .iphone.vertical-big .base {
+    width: 170px;
+    height: 362.26px;
+  }
+
+  .iphone.vertical-big .screen {
+    top: 51px;
+    left: 10px;
+
+    width: 150px;
+    height: 264px;
+  }
+
+  .horizontal .screen {
+    top: 66px;
+    left: 10px;
+
+    width: 142.5px;
+    height: 253.5px;
+  }
+
+  .screen.third-theme {
+    background-image: url("./assets/images/bg-green.png");
+    background-position: 0 0;
+  }
+
+  .shadow {
+    width: 180.85px;
+    height: 363.74px;
+  }
+
+  .base {
+    width: 165px;
+    height: 345.26px;
+  }
+
+  .screen {
+    position: absolute;
+    top: 48px;
+    left: 9px;
+
+    width: 143px;
+    height: 252px;
+  }
+
+  .main section .summary {
+    max-height: unset;
+  }
+
+  .services {
+    padding-top: 42px;
+    padding-bottom: 17px;
+  }
+
+  .services .summary {
+    height: 90px;
+    margin-bottom: 36px;
+  }
+
+  .services .details {
+    padding-right: 35px;
+  }
+
+  .service-icon {
+    margin-top: 2px;
+    margin-left: 1px;
+  }
+
+  .services .description-container {
+    height: 144px;
+  }
+
+  .portfolio {
+    width: unset;
+    padding-bottom: 47px;
+  }
+
+  .portfolio .summary {
+    height: 56px;
+
+    letter-spacing: 0.3px;
+  }
+
+  .portfolio-image {
+    width: 216px;
+    height: 184px;
+    margin-bottom: 16.5px;
+  }
+
+  /*.portfolio-images {
+    padding-left: 0;
+    margin-top: 28px;
+  }
+
+  .portfolio-images li {
+    flex: 1 0 25%;
+  }*/
+
+  .about-us {
+    padding-top: 53px;
+    padding-bottom: 56px;
+  }
+
+  .about-us .details {
+    margin-top: 38.5px;
+    padding-left: 2px;
+  }
+
+  .about-us .details-item {
+    width: 31.9%;
+  }
+
+  .about-us .description-container {
+    margin-top: 11px;
+    margin-bottom: 15px;
+  }
+
+  .about-us .description-container h3 {
+    margin-bottom: 3px;
+  }
+
+  .about-us .description-container p {
+    height: 60px;
+  }
+
+  .get-quote {
+    padding-top: 54px;
+    padding-bottom: 39px;
+  }
+
+  .main section.get-quote h2 {
+    padding-left: 2px;
+  }
+
+  .get-quote .summary {
+    margin-bottom: 2px;
+  }
+
+  .get-quote form {
+    margin-left: -1px;
+  }
+
+  .get-quote .data-fields > :not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  .get-quote .data-fields > * {
+    padding-left: 9px;
+  }
+
+  .get-quote .data-fields {
+    width: 64.1%;
+  }
+
+  .get-quote .contact-info {
+    width: 31.7%;
+  }
+
+  .get-quote .contact-info p {
+    width: auto;
+    height: auto;
+    margin-top: 2px;
+    margin-bottom: 14.4px;
+
+    line-height: 22px;
+  }
+
+  .get-quote .data-fields > .details {
+    height: 156px;
+    padding-top: 3px;
+  }
+
+  .get-quote .data-fields > [type="submit"] {
+    margin-top: 5px;
+  }
+
+  .footer .copyright {
+    padding-left: 0;
+
+    letter-spacing: 0.5px;
+  }
+
+  .footer {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .footer .social-media {
+    padding-top: 3px;
+    padding-right: 2px;
+  }
+}
+
