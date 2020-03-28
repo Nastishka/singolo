@@ -73,7 +73,7 @@ html {
 
 /*************** Singolo. Part 1 ***************/
 .header {
-  /*position: sticky;*/
+  position: sticky;
   top: 0;
   z-index: 1;
 
@@ -84,6 +84,15 @@ html {
 
   background-color: #2d303a;
   border-bottom: #323746 solid 6px;
+}
+
+.header .header-content {
+  position: relative;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
 }
 
 .header .burger-menu {
@@ -1291,3 +1300,481 @@ div.modal-window-close:focus {
   }
 }
 
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .header {
+    height: 71px;
+    padding: 0;
+
+    border-bottom-color: green;
+  }
+
+  .page-wrapper {
+    max-width: 375px;
+  }
+
+  .header,
+  aside.carousel .sliders > .slider,
+  .main > section {
+    border-bottom: 0;
+  }
+
+  .header .burger-menu {
+    position: absolute;
+    top: 26px;
+    left: 20px;
+    z-index: 3;
+
+    display: block;
+    width: 25px;
+    height: 20px;
+
+    list-style-type: none;
+
+    cursor: pointer;
+  }
+
+  .header .burger-menu li {
+    width: 25px;
+    height: 2.4px;
+    margin-bottom: 6px;
+
+    background-color: #ffffff;
+    border-radius: 5px;
+  }
+
+  .header .burger-menu:focus li,
+  .header .burger-menu:hover li {
+    background-color: #f06c64;
+  }
+
+  .header .burger-menu.animationed {
+    animation-name: rotateBurgerMenu;
+    animation-duration: 2s;
+    animation-direction: alternate;
+    animation-iteration-count: 2;
+  }
+
+  @keyframes rotateBurgerMenu {
+    to {
+      transform: rotate(90deg);
+    }
+  }
+
+  .header .logo {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    z-index: 3;
+
+    padding-left: 13px;
+
+    font-size: 19.6875px;
+    letter-spacing: -0.03em;
+
+    transform: translate(-50%, 0);
+  }
+
+  .header .logo.animationed {
+    animation-name: moveLogo;
+    animation-duration: 2s;
+    animation-direction: alternate;
+    animation-iteration-count: 2;
+  }
+
+  .animationed.paused {
+    animation-play-state: paused;
+  }
+
+  @keyframes moveLogo {
+    0% {
+      left: 50%;
+
+      transform: translate(-50%, 0);
+    }
+
+    100% {
+      left: 58px;
+
+      transform: translate(0, 0);
+    }
+  }
+
+  .header .logo-tail {
+    font-size: 19.6875px;
+  }
+
+  .header nav {
+    position: absolute;
+    z-index: 2;
+    /*width: 278px;*/
+
+    width: 0;
+    height: 100vh;
+    overflow: hidden;
+
+    background-color: #2d303a;
+    box-shadow: 0 -40px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .header nav.animationed {
+    animation-name: showBurgerMenu;
+    animation-duration: 2s;
+    animation-direction: alternate;
+    animation-iteration-count: 2;
+  }
+
+  @keyframes showBurgerMenu {
+    0% {
+      width: 0;
+    }
+
+    100% {
+      width: 278px;
+    }
+  }
+
+  .header .nav-container {
+    position: absolute;
+    top: 232px;
+    left: 71px;
+
+    flex-direction: column;
+    width: 205px;
+    padding: 0;
+    /*animation-name: showLeftMenu;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;*/
+  }
+
+  /*.header .header-content .nav-container {
+
+    width: 205px;
+    padding: 0;
+  }*/
+
+  .header .header-content .nav-container li.separator {
+    display: none;
+  }
+
+  .header .header-content .nav-container a {
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: -0.035em;
+  }
+
+  .header .header-content .nav-container li {
+    margin-bottom: 28.5px;
+  }
+
+  /*.header .header-content.show-left-menu .logo {
+    position: absolute;
+    top: 14px;
+    left: 71px;
+
+    padding-left: 0;
+
+    transform: unset;
+  }
+
+
+
+  .header .header-content.show-left-menu nav {
+    position: absolute;
+    top: 232px;
+    left: 71px;
+
+    display: block;
+    width: 205px;
+    height: 260px;
+  }
+
+  .header .header-content.show-left-menu {
+    z-index: 10;
+
+    display: block;
+    width: 278px;
+    height: 100vh;
+
+    background-color: #2d303a;
+    box-shadow: 0 -40px 20px rgba(0, 0, 0, 0.4);
+
+    animation-name: showLeftMenu;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+  }
+
+  @keyframes showLeftMenu {
+    from {
+      width: 0;
+    }
+
+    to {
+      width: 278px;
+    }
+  }
+
+  .header .header-content.hide-left-menu {
+    animation-name: hideLeftMenu;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    width: 0;
+  }
+
+  @keyframes hideLeftMenu {
+    from {
+      width: 278px;
+    }
+
+    to {
+      width: 0;
+    }
+  }
+
+
+
+
+  .header .header-content.show-left-menu .burger-menu {
+    top: 26px;
+    left: 19px;
+
+    transform: rotate(90deg);
+  }*/
+
+  .carousel {
+    height: 450px;
+  }
+
+  .slider-action.left {
+    top: 211px;
+    left: 29px;
+  }
+
+  .slider-action.right {
+    top: 211px;
+    right: 26px;
+  }
+
+  .iphone.vertical {
+    top: 41px;
+    left: 84px;
+  }
+
+  .iphone.horizontal {
+    top: 42.5px;
+    left: 411px;
+  }
+
+  .iphone.vertical-big {
+    top: 36px;
+    left: 290px;
+  }
+
+  .iphone.vertical-big .shadow {
+    width: 190.85px;
+    height: 379.74px;
+  }
+
+  .iphone.vertical-big .base {
+    width: 170px;
+    height: 362.26px;
+  }
+
+  .iphone.vertical-big .screen {
+    top: 51px;
+    left: 10px;
+
+    width: 150px;
+    height: 264px;
+  }
+
+  .horizontal .screen {
+    top: 66px;
+    left: 10px;
+
+    width: 142.5px;
+    height: 253.5px;
+  }
+
+  .screen.third-theme {
+    background-image: url("./assets/images/bg-green.png");
+    background-position: 0 0;
+  }
+
+  .shadow {
+    width: 180.85px;
+    height: 363.74px;
+  }
+
+  .base {
+    width: 165px;
+    height: 345.26px;
+  }
+
+  .screen {
+    position: absolute;
+    top: 48px;
+    left: 9px;
+
+    width: 143px;
+    height: 252px;
+  }
+
+  .main section .summary {
+    max-height: unset;
+  }
+
+  .services {
+    padding-top: 42px;
+    padding-bottom: 17px;
+  }
+
+  .services .summary {
+    height: 90px;
+    margin-bottom: 36px;
+  }
+
+  .services .details {
+    padding-right: 35px;
+  }
+
+  .service-icon {
+    margin-top: 2px;
+    margin-left: 1px;
+  }
+
+  .services .description-container {
+    height: 144px;
+  }
+
+  .portfolio {
+    width: unset;
+    padding-bottom: 47px;
+  }
+
+  .portfolio .summary {
+    height: 56px;
+
+    letter-spacing: 0.3px;
+  }
+
+  .portfolio-image {
+    width: 216px;
+    height: 184px;
+    margin-bottom: 16.5px;
+  }
+
+  /*.portfolio-images {
+    padding-left: 0;
+    margin-top: 28px;
+  }
+
+  .portfolio-images li {
+    flex: 1 0 25%;
+  }*/
+
+  .about-us {
+    padding-top: 53px;
+    padding-bottom: 56px;
+  }
+
+  .about-us .details {
+    margin-top: 38.5px;
+    padding-left: 2px;
+  }
+
+  .about-us .details-item {
+    width: 31.9%;
+  }
+
+  .about-us .description-container {
+    margin-top: 11px;
+    margin-bottom: 15px;
+  }
+
+  .about-us .description-container h3 {
+    margin-bottom: 3px;
+  }
+
+  .about-us .description-container p {
+    height: 60px;
+  }
+
+  .get-quote {
+    padding-top: 54px;
+    padding-bottom: 39px;
+  }
+
+  .main section.get-quote h2 {
+    padding-left: 2px;
+  }
+
+  .get-quote .summary {
+    margin-bottom: 2px;
+  }
+
+  .get-quote form {
+    margin-left: -1px;
+  }
+
+  .get-quote .data-fields > :not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  .get-quote .data-fields > * {
+    padding-left: 9px;
+  }
+
+  .get-quote .data-fields {
+    width: 64.1%;
+  }
+
+  .get-quote .contact-info {
+    width: 31.7%;
+  }
+
+  .get-quote .contact-info p {
+    width: auto;
+    height: auto;
+    margin-top: 2px;
+    margin-bottom: 14.4px;
+
+    line-height: 22px;
+  }
+
+  .get-quote .data-fields > .details {
+    height: 156px;
+    padding-top: 3px;
+  }
+
+  .get-quote .data-fields > [type="submit"] {
+    margin-top: 5px;
+  }
+
+  .footer .copyright {
+    padding-left: 0;
+
+    letter-spacing: 0.5px;
+  }
+
+  .footer {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .footer .social-media {
+    padding-top: 3px;
+    padding-right: 2px;
+  }
+}
+
+@media screen and (max-width: 374px) {
+  .header {
+    border-bottom-color: blue;
+  }
+
+  /*.portfolio-images li{
+    flex: 1 0 35%;
+  }*/
+}

@@ -265,6 +265,48 @@ const showNewSlide = (slideOffset, directionForHiding, directionForShowing, slid
   }
 }
 
+const addEventListenerOnBurgerMenuClick = (burgerMenuSelector) => {
+
+  let burgerMenu = document.querySelector(burgerMenuSelector);
+  let animationedElements = [
+    burgerMenu,
+    burgerMenu.parentNode.querySelector('.logo'),
+    burgerMenu.parentNode.querySelector('nav')
+  ];
+  burgerMenu.addEventListener('click', function (e) {
+    let logo = this.parentNode.querySelector('.logo');
+    if (this.classList.contains('off')) {
+      animationedElements.forEach(element => {
+        element.classList.add('animationed');
+      })
+    } else {
+      animationedElements.forEach(element => {
+        element.classList.remove('paused');
+      })
+    }
+    this.classList.toggle('off');
+    console.log('btnClick');
+    e.stopPropagation();
+  });
+
+  animationedElements.forEach(element => {
+    element.addEventListener("animationiteration", function (e) {
+      e.target.classList.add('paused');
+    }, false);
+
+    element.addEventListener("animationend", function (e) {
+      e.target.classList.remove('animationed');
+    }, false);
+  });
+
+  window.addEventListener('click', function (e) {
+    if (burgerMenu.classList.contains('animationed')){
+      burgerMenu.click();
+      console.log('close');
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   fixForScrolling();
   activateCurrentNavLink('.nav-container');
@@ -276,4 +318,5 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListenerForSliderActionLinks('.slider-action');
   addEventListenerOnWindowScroll('.nav-container');
   addEventListenerForPhones('.iphone');
+  addEventListenerOnBurgerMenuClick('.burger-menu');
 });
