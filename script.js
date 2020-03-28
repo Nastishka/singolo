@@ -21,23 +21,24 @@ const makeListItemActive = (parentContainer, target, deactivateOnSecondClick) =>
 let allowActivatingNavItemsOnScroll = true;
 
 const addEventListenerOnWindowScroll = (navLinksSelector) => {
-  let headerHeight = document.querySelector('header.header').clientHeight;
-  let sectionStubs = [];
-  let sections = document.querySelectorAll('main > section[id]');
-  sectionStubs.push({
-    startPosition: 0,
-    endPosition: document.querySelector('aside.carousel').clientHeight / 3,
-    relatedLink: document.querySelector(`${navLinksSelector} li a[href='#']`)
-  });
-  sections.forEach((section) => {
-    let sectionId = section['id'];
-    sectionStubs.push({
-      startPosition: section.offsetTop - headerHeight,
-      endPosition: section.offsetTop + section.clientHeight / 3,
-      relatedLink: document.querySelector(`${navLinksSelector} li a[href='#${sectionId}']`)
-    });
-  });
   window.addEventListener('scroll', function (e) {
+    let headerHeight = document.querySelector('header.header').clientHeight;
+    let sectionStubs = [];
+    let sections = document.querySelectorAll('main > section[id]');
+    sectionStubs.push({
+      startPosition: 0,
+      endPosition: document.querySelector('aside.carousel').clientHeight / 3,
+      relatedLink: document.querySelector(`${navLinksSelector} li a[href='#']`)
+    });
+    sections.forEach((section) => {
+      let sectionId = section['id'];
+      sectionStubs.push({
+        startPosition: section.offsetTop - headerHeight,
+        endPosition: section.offsetTop + section.clientHeight / 3,
+        relatedLink: document.querySelector(`${navLinksSelector} li a[href='#${sectionId}']`)
+      });
+    });
+
     if (allowActivatingNavItemsOnScroll) {
       let currentPosition = window.scrollY;
       sectionStubs.forEach((item) => {
@@ -300,7 +301,7 @@ const addEventListenerOnBurgerMenuClick = (burgerMenuSelector) => {
   });
 
   window.addEventListener('click', function (e) {
-    if (burgerMenu.classList.contains('animationed')){
+    if (burgerMenu.classList.contains('animationed')) {
       burgerMenu.click();
       console.log('close');
     }
