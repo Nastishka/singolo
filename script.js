@@ -269,41 +269,54 @@ const showNewSlide = (slideOffset, directionForHiding, directionForShowing, slid
 const addEventListenerOnBurgerMenuClick = (burgerMenuSelector) => {
 
   let burgerMenu = document.querySelector(burgerMenuSelector);
-  let animationedElements = [
+  let nav =  burgerMenu.parentNode.querySelector('nav');
+  let animatingElements = [
     burgerMenu,
     burgerMenu.parentNode.querySelector('.logo'),
-    burgerMenu.parentNode.querySelector('nav')
+    nav
   ];
   burgerMenu.addEventListener('click', function (e) {
+
+    let isNavDisplayed = window.getComputedStyle(nav).width !== '0px';
+    if (!isNavDisplayed &&
+      (nav.classList.contains('animating') || nav.classList.contains('paused'))) {
+      this.classList.add('off');
+      animatingElements.forEach(element => {
+        element.classList.remove('animating');
+      });
+      animatingElements.forEach(element => {
+        element.classList.remove('paused');
+      });
+    }
     let logo = this.parentNode.querySelector('.logo');
     if (this.classList.contains('off')) {
-      animationedElements.forEach(element => {
-        element.classList.add('animationed');
-      })
+      animatingElements.forEach(element => {
+        element.classList.add('animating');
+      });
     } else {
-      animationedElements.forEach(element => {
+      animatingElements.forEach(element => {
         element.classList.remove('paused');
-      })
+      });
     }
     this.classList.toggle('off');
-    console.log('btnClick');
     e.stopPropagation();
   });
 
-  animationedElements.forEach(element => {
+  animatingElements.forEach(element => {
     element.addEventListener("animationiteration", function (e) {
       e.target.classList.add('paused');
     }, false);
 
     element.addEventListener("animationend", function (e) {
-      e.target.classList.remove('animationed');
+      e.target.classList.remove('animating');
     }, false);
   });
 
   window.addEventListener('click', function (e) {
-    if (burgerMenu.classList.contains('animationed')) {
+    let isBurgerMenuDisplayed = window.getComputedStyle(burgerMenu).display  === 'block';
+    let isNavDisplayed = window.getComputedStyle(nav).width !== '0px';
+    if (isBurgerMenuDisplayed && isNavDisplayed) {
       burgerMenu.click();
-      console.log('close');
     }
   });
 }

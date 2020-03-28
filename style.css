@@ -299,7 +299,6 @@ html {
   background-image: url("./assets/images/iphone.png");
   background-repeat: no-repeat;
   background-size: contain;
-  border-radius: 30px;
 }
 
 .slider .base {
@@ -1379,7 +1378,7 @@ div.modal-window-close:focus {
     background-color: #f06c64;
   }
 
-  .header .burger-menu.animationed {
+  .header .burger-menu.animating {
     animation-name: rotateBurgerMenu;
     animation-duration: 1s;
     animation-iteration-count: 2;
@@ -1406,14 +1405,14 @@ div.modal-window-close:focus {
     transform: translate(-50%, 0);
   }
 
-  .header .logo.animationed {
+  .header .logo.animating {
     animation-name: moveLogo;
     animation-duration: 1s;
     animation-iteration-count: 2;
     animation-direction: alternate;
   }
 
-  .animationed.paused {
+  .animating.paused {
     animation-play-state: paused;
   }
 
@@ -1447,7 +1446,7 @@ div.modal-window-close:focus {
     box-shadow: 0 -40px 20px rgba(0, 0, 0, 0.4);
   }
 
-  .header nav.animationed {
+  .header nav.animating {
     animation-name: showBurgerMenu;
     animation-duration: 1s;
     animation-iteration-count: 2;
